@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface RoomService {
-    List<Room> getAvailableRooms(LocalDate start, LocalDate end);
+    List<Room> getAvailableRooms(LocalDate start, LocalDate end, String type);
     void reserveRoom(Integer roomNumber);
     void releaseRoom(Integer roomNumber);
     boolean isRoomAvailable(Integer roomNumber);
