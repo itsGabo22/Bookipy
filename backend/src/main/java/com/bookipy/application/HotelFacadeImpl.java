@@ -4,7 +4,6 @@ import com.bookipy.application.dto.InvoiceDTO;
 import com.bookipy.application.dto.ReservationDTO;
 import com.bookipy.domain.model.Reservation;
 import com.bookipy.domain.service.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -14,7 +13,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-@RequiredArgsConstructor
 public class HotelFacadeImpl implements HotelFacade {
 
     private final RoomService roomService;
@@ -23,7 +21,17 @@ public class HotelFacadeImpl implements HotelFacade {
     private final BillingService billingService;
     private final AccessService accessService;
 
-    // In-memory "Database" for the purpose of the exercise
+    // Manual constructor for Dependency Injection (Replaces @RequiredArgsConstructor)
+    public HotelFacadeImpl(RoomService roomService, RateService rateService, 
+                           AdditionalServiceService additionalServiceService, 
+                           BillingService billingService, AccessService accessService) {
+        this.roomService = roomService;
+        this.rateService = rateService;
+        this.additionalServiceService = additionalServiceService;
+        this.billingService = billingService;
+        this.accessService = accessService;
+    }
+
     private final Map<String, Reservation> reservations = new ConcurrentHashMap<>();
 
     @Override
@@ -35,19 +43,22 @@ public class HotelFacadeImpl implements HotelFacade {
         BigDecimal totalPrice = rateService.calculatePrice(dto.getRoomNumber(), dto.getCheckInDate(), dto.getCheckOutDate());
         
         String id = UUID.randomUUID().toString().substring(0, 8);
-        Reservation reservation = Reservation.builder()
-                .id(id)
-                .guestName(dto.getGuestName())
-                .guestEmail(dto.getGuestEmail())
-                .roomNumber(dto.getRoomNumber())
-                .checkInDate(dto.getCheckInDate())
-                .checkOutDate(dto.getCheckOutDate())
-                .isActive(true)
-                .checkedIn(false)
-                .checkedOut(false)
-                .totalPrice(totalPrice)
-                .extraServices(new ArrayList<>())
-                .build();
+        
+        // Using standard constructor instead of Builder
+        Reservation reservation = new Reservation(
+                id,
+                dto.getGuestName(),
+                dto.getGuestEmail(),
+                dto.getRoomNumber(),
+                dto.getCheckInDate(),
+                dto.getCheckOutDate(),
+                true,
+                false,
+                false,
+                null,
+                new ArrayList<>(),
+                totalPrice
+        );
 
         roomService.reserveRoom(dto.getRoomNumber());
         reservations.put(id, reservation);
@@ -86,7 +97,6 @@ public class HotelFacadeImpl implements HotelFacade {
             throw new RuntimeException("Already checked out");
         }
 
-        // Add additional services to the model before generating invoice
         reservation.setExtraServices(additionalServiceService.getServicesByReservation(reservationId));
         
         InvoiceDTO invoice = billingService.generateInvoice(reservation);
