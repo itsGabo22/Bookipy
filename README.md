@@ -1,65 +1,52 @@
-# Bookipy - Hotel Reservation System
+# Bookipy - Sistema de Reservas de Hotel 🏨
 
-Bookipy is a high-performance, in-memory hotel reservation system built with **Spring Boot** and **React**. It utilizes the **Facade Pattern** to encapsulate complex internal hotel logic into a unified interface.
-
-## Architecture: Facade Pattern
-
-The system is designed to hide the complexity of multiple subsystems behind a single `HotelFacade`. This ensures the controller remains lean and focused on handling HTTP requests.
-
-### Subsystems Orchestrated by HotelFacade:
-1.  **RoomService**: Manages 15 in-memory rooms.
-2.  **RateService**: Calculates dynamic pricing based on season (High/Low).
-3.  **AdditionalServiceService**: Handles extras (Spa, Breakfast, Transfers).
-4.  **BillingService**: Generates detailed invoices.
-5.  **AccessService**: Generates digital keys using UUIDs.
+**Bookipy** es una solución full-stack robusta diseñada para la gestión digital de reservas hoteleras. El proyecto implementa una **Arquitectura Limpia** y el patrón de diseño **Facade** para desacoplar la lógica de negocio compleja de la capa de presentación.
 
 ---
 
-## Team Workflow (2-Hour Sprint)
-
-To complete this project in under 2 hours, we will divide the work between **Cristian** and **Gabriel**.
-
-### Phase 1: Backend Core (45 Minutes)
-- **Cristian**:
-    - Implement `RoomService` and `RateService`.
-    - Implement `AdditionalServiceService` and `BillingService`.
-    - Define Domain Models (`Room`, `Reservation`, `Invoice`).
-- **Gabriel**:
-    - Implement `HotelFacade`.
-    - Implement `AccessService`.
-    - Set up the Spring Boot structure and DTOs.
-
-### Phase 2: REST API & Backend Refinement (30 Minutes)
-- **Cristian**: Unit testing of business logic in services.
-- **Gabriel**: Implement `HotelController` and expose all REST Endpoints.
-
-### Phase 3: Frontend Development (45 Minutes)
-- **Cristian**: Dashboard component and Reservation Management (Check-in/out).
-- **Gabriel**: Search functionality, Room List, and Booking Form.
-- **Integration**: Final testing of the end-to-end flow.
+## 👥 Equipo de Desarrollo
+- **Backend Developer & Architect**: Gabriel Esteban Paz Guerrero
+- **Frontend Developer**: Cristian Javier Velasco
 
 ---
 
-## Technology Stack
-- **Backend**: Java 17, Spring Boot 3.x (Web, Lombok).
-- **Frontend**: React, TailwindCSS, Vite.
-- **Deployment**: Render (Backend), Vercel (Frontend).
+## 🛠️ Tecnologías Utilizadas
+- **Backend**: Java 21+ con **Spring Boot 3.4.1**.
+- **Frontend**: React.js con TailwindCSS.
+- **Despliegue**: 
+  - Backend: **Railway / Render**
+  - Frontend: **Vercel**
+- **Gestión de Estado**: In-memory con Colecciones Concurrentes de Java.
 
-## Project Structure
-```text
-Bookipy/
-├── backend/
-│   ├── src/main/java/com/bookipy/
-│   │   ├── api/            # Controllers
-│   │   ├── application/    # HotelFacade, DTOs
-│   │   ├── domain/
-│   │   │   ├── model/      # Entities
-│   │   │   └── service/    # Subsystems (5 services)
-│   │   └── BookipyApplication.java
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   └── App.jsx
-└── README.md
-```
+---
+
+## 🏗️ Implementación del Patrón Facade
+El núcleo del sistema utiliza el patrón **Facade (Fachada)** para simplificar las interacciones entre la API REST y los procesos internos del hotel.
+
+### ¿Cómo funciona en Bookipy?
+1. **Punto Único de Entrada**: La clase `HotelFacade` expone métodos simplificados como `createReservation` o `performCheckOut`.
+2. **Orquestador de Subsistemas**: Internamente, la fachada coordina 5 servicios especializados (servicios ocultos para el cliente):
+   - **RoomService**: Control de 15 habitaciones (STANDARD, DOUBLE, SUITE).
+   - **RateService**: Cálculo dinámico de precios (Temporada Alta x1.5 en Julio/Diciembre).
+   - **AdditionalServiceService**: Gestión de extras (Spa, Desayuno por día, Traslados).
+   - **AccessService**: Generación de llaves digitales mediante UUID.
+   - **BillingService**: Cálculo de costes y generación de factura detallada.
+
+Este diseño asegura que si un subsistema cambia (ej. la lógica de precios), el controlador de la API no se ve afectado.
+
+---
+
+## 🚀 Requisitos del "Caso de Estudio" (Taller)
+El proyecto cumple estrictamente con las notas del taller:
+- **Nota 1**: Desarrollo completo de Frontend y Backend.
+- **Nota 2**: Listos para despliegue en entorno de Producción (Railway/Vercel).
+- **Nota 3**: Desarrollo en equipo (Gabriel y Cristian).
+- **Lógica de Negocio**: 
+  - Gestión de 15 habitaciones predefinidas.
+  - Tarifas dinámicas por temporada y tipo de estancia.
+  - Facturación detallada con desglose de servicios adicionales.
+
+---
+
+## 📖 Instrucciones de API
+Para más detalles sobre los endpoints y formatos JSON, consulte el archivo [**API_CONTRACT.md**](./API_CONTRACT.md).

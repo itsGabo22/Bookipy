@@ -13,6 +13,7 @@ Used to find rooms between two dates.
 - **Query Params:**
   - `start`: (Date, ISO: YYYY-MM-DD)
   - `end`: (Date, ISO: YYYY-MM-DD)
+  - `type`: (Optional String: `STANDARD`, `DOUBLE`, `SUITE`)
 - **Response (200 OK):**
 ```json
 [
@@ -65,7 +66,7 @@ The following operations require the `id` obtained in the step above.
 - **Query Params:**
   - `tipoServicio`: (String - Choose from: `SPA`, `BREAKFAST`, `TRANSFER`)
 - **Response (200 OK):** No body.
-- **Prices:** Spa ($50), Breakfast ($15), Transfer ($30).
+- **Prices:** Spa ($50), Breakfast ($15 **per day**), Transfer ($30).
 
 ### D. Perform Check-Out (Final Bill)
 - **Endpoint:** `PUT /checkout/{id}`
