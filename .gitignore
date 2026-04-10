@@ -1,0 +1,29 @@
+# Maven
+**/target/
+!.mvn/wrapper/maven-wrapper.jar
+/backend/.mvn/wrapper/maven-wrapper.jar
+/backend/target/
+
+# Node / React
+**/node_modules/
+/frontend/node_modules/
+/frontend/dist/
+.eslintcache
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.iml
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env
+.env
+.env.local
