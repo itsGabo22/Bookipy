@@ -32,10 +32,11 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getAvailableRooms(LocalDate start, LocalDate end) {
+    public List<Room> getAvailableRooms(LocalDate start, LocalDate end, String type) {
         // Since it's an in-memory simplified exercise, we return rooms where isAvailable is true
         return rooms.values().stream()
                 .filter(Room::isAvailable)
+                .filter(r -> type == null || type.isEmpty() || r.getType().equalsIgnoreCase(type))
                 .collect(Collectors.toList());
     }
 

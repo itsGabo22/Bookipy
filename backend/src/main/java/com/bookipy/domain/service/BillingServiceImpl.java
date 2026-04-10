@@ -6,6 +6,7 @@ import com.bookipy.domain.model.Reservation;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +26,21 @@ public class BillingServiceImpl implements BillingService {
 
         if (reservation.getExtraServices() != null && !reservation.getExtraServices().isEmpty()) {
             details.add("--- Servicios Adicionales ---");
+            long nights = ChronoUnit.DAYS.between(reservation.getCheckInDate(), reservation.getCheckOutDate());
+            if (nights <= 0) nights = 1;
+
             for (AdditionalServiceItem service : reservation.getExtraServices()) {
-                details.add(service.getType() + ": $" + service.getPrice());
-                total = total.add(service.getPrice());
+                BigDecimal servicePrice = service.getPrice();
+                String detailLine = service.getType() + ": $" + servicePrice;
+                
+                // Requirement: Breakfast is $15/day (per night)
+                if (service.getType().equalsIgnoreCase("BREAKFAST")) {
+                    servicePrice = servicePrice.multiply(new BigDecimal(nights));
+                    detailLine = service.getType() + " (" + nights + " días): $" + servicePrice;
+                }
+                
+                details.add(detailLine);
+                total = total.add(servicePrice);
             }
         }
 

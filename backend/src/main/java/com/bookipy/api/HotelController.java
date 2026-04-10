@@ -33,8 +33,9 @@ public class HotelController {
     @GetMapping("/disponibilidad")
     public ResponseEntity<?> consultarDisponibilidad(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
-        return ResponseEntity.ok(roomService.getAvailableRooms(start, end));
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
+            @RequestParam(required = false) String type) {
+        return ResponseEntity.ok(roomService.getAvailableRooms(start, end, type));
     }
 
     @PostMapping("/servicios/{reservaId}")
