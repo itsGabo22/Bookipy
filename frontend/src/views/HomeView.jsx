@@ -26,11 +26,11 @@ const HomeView = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!dates.start || !dates.end) {
-      toast.error("Please select start and end dates");
+      toast.error("Por favor selecciona fechas de entrada y salida");
       return;
     }
     if (new Date(dates.start) >= new Date(dates.end)) {
-      toast.error("End date must be after start date");
+      toast.error("La fecha de salida debe ser después de la entrada");
       return;
     }
 
@@ -40,7 +40,7 @@ const HomeView = () => {
       setRooms(results);
       setHasSearched(true);
     } catch (err) {
-      toast.error("Error searching availability");
+      toast.error("Error al buscar disponibilidad");
     } finally {
       setIsSearching(false);
     }
@@ -60,10 +60,10 @@ const HomeView = () => {
         className="text-center mb-16"
       >
         <h1 className="text-4xl md:text-6xl font-bold font-sans text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-white mb-4">
-          Experience Ultimate Luxury
+          Experiencia de Lujo Absoluto
         </h1>
         <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-          Discover a sanctuary of elegance. Find availability for your dates and indulge in world-class amenities.
+          Descubre un santuario de elegancia. Encuentra disponibilidad para tus fechas y disfruta de comodidades de clase mundial.
         </p>
       </motion.div>
 
@@ -76,7 +76,7 @@ const HomeView = () => {
         className="bg-brand-navy p-6 rounded-2xl shadow-2xl border border-brand-teal/30 mb-16 max-w-4xl mx-auto flex flex-col md:flex-row gap-4 items-end"
       >
         <div className="flex-1 w-full">
-          <label className="block text-sm text-gray-400 mb-2 font-medium">Check In</label>
+          <label className="block text-sm text-gray-400 mb-2 font-medium">Entrada</label>
           <input 
             type="date" 
             min={todayStr}
@@ -86,7 +86,7 @@ const HomeView = () => {
           />
         </div>
         <div className="flex-1 w-full">
-          <label className="block text-sm text-gray-400 mb-2 font-medium">Check Out</label>
+          <label className="block text-sm text-gray-400 mb-2 font-medium">Salida</label>
           <input 
             type="date" 
             min={dates.start || todayStr}
@@ -96,15 +96,15 @@ const HomeView = () => {
           />
         </div>
         <div className="flex-1 w-full">
-          <label className="block text-sm text-gray-400 mb-2 font-medium">Room Type</label>
+          <label className="block text-sm text-gray-400 mb-2 font-medium">Tipo de Habitación</label>
           <select 
             value={roomType}
             onChange={e => setRoomType(e.target.value)}
             className="w-full bg-brand-dark text-white border border-brand-teal/50 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-accent transition-colors appearance-none block"
           >
-            <option value="ALL">All Types</option>
-            <option value="STANDARD">Standard</option>
-            <option value="DOUBLE">Double</option>
+            <option value="ALL">Todos los Tipos</option>
+            <option value="STANDARD">Estándar</option>
+            <option value="DOUBLE">Doble</option>
             <option value="SUITE">Suite</option>
           </select>
         </div>
@@ -115,7 +115,7 @@ const HomeView = () => {
             className="w-full md:w-auto px-8 py-3 bg-brand-accent hover:bg-brand-gold text-brand-dark font-bold rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(245,158,11,0.3)] disabled:opacity-70"
           >
             <Search size={20} />
-            {isSearching ? 'Searching...' : 'Explore'}
+            {isSearching ? 'Buscando...' : 'Explorar'}
           </button>
         </div>
       </motion.form>
@@ -127,17 +127,17 @@ const HomeView = () => {
           animate={{ opacity: 1 }}
         >
           <h2 className="text-2xl font-bold text-white mb-8 border-l-4 border-brand-gold pl-3">
-            Available Rooms
+            Habitaciones Disponibles
           </h2>
           
           {rooms.filter(r => r.isAvailable).length === 0 ? (
             <div className="text-center py-16 bg-brand-navy rounded-xl border border-brand-teal/20">
-              <p className="text-gray-400 text-lg">No rooms available for the selected dates and criteria.</p>
+              <p className="text-gray-400 text-lg">No hay habitaciones disponibles para las fechas y criterios indicados.</p>
               <button 
                  onClick={() => setDates({ start: '', end: ''})}
                  className="mt-4 text-brand-accent underline hover:text-brand-gold transition cursor-pointer"
               >
-                 Try different dates
+                 Intentar fechas diferentes
               </button>
             </div>
           ) : (

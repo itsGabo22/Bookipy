@@ -16,7 +16,7 @@ const ReservationModal = ({ isOpen, onClose, room, dates }) => {
   const handleBook = async (e) => {
     e.preventDefault();
     if (!guestName || !guestEmail) {
-      toast.error("Please fill all fields");
+      toast.error("Por favor, completa todos los campos");
       return;
     }
     
@@ -29,13 +29,12 @@ const ReservationModal = ({ isOpen, onClose, room, dates }) => {
         dates.start, 
         dates.end
       );
-      toast.success("Reservation confirmed!");
-      // Save ID to simple local storage to simulate "logged in" guest
+      toast.success("¡Reservación confirmada!");
       localStorage.setItem('bookipy_reservation', res.id);
       onClose();
       navigate('/dashboard');
     } catch (err) {
-      toast.error(err.message || 'Error creating reservation');
+      toast.error(err.message || 'Error al crear la reservación');
     } finally {
       setIsLoading(false);
     }
@@ -56,7 +55,7 @@ const ReservationModal = ({ isOpen, onClose, room, dates }) => {
           className="bg-brand-navy max-w-md w-full rounded-2xl shadow-2xl overflow-hidden border border-brand-teal/50 relative"
         >
           <div className="flex justify-between items-center p-6 border-b border-brand-teal/30">
-            <h2 className="text-xl font-bold text-white">Complete Booking</h2>
+            <h2 className="text-xl font-bold text-white">Completar Reserva</h2>
             <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors">
               <X size={24} />
             </button>
@@ -65,43 +64,43 @@ const ReservationModal = ({ isOpen, onClose, room, dates }) => {
           <div className="p-6">
             <div className="bg-brand-dark rounded-xl p-4 mb-6 border border-brand-teal/30 flex justify-between items-center">
               <div>
-                <p className="text-sm text-gray-400 mb-1">Room {room.number} • {room.type}</p>
+                <p className="text-sm text-gray-400 mb-1">Habitación {room.number} • {room.type}</p>
                 <div className="flex items-center text-brand-gold text-sm gap-2">
                   <CalendarIcon size={14} />
-                  <span>{dates.start} to {dates.end}</span>
+                  <span>{dates.start} al {dates.end}</span>
                 </div>
               </div>
               <div className="text-right">
                 <span className="text-xl font-bold text-white">${room.basePrice.toFixed(2)}</span>
-                <span className="text-xs text-gray-500 block">/night</span>
+                <span className="text-xs text-gray-500 block">/noche</span>
               </div>
             </div>
 
             <form onSubmit={handleBook} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Nombre Completo</label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
                   <input 
                     type="text" 
                     value={guestName}
                     onChange={(e) => setGuestName(e.target.value)}
-                    className="w-full bg-brand-dark/50 border border-brand-teal/50 rounded-lg pl-10 pr-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all placeholder-gray-500"
-                    placeholder="John Doe"
+                    className="w-full bg-brand-dark/50 border border-brand-teal/50 rounded-lg pr-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all pl-10 placeholder-gray-500"
+                    placeholder="Carlos Pérez"
                     required
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Correo Electrónico</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
                   <input 
                     type="email" 
                     value={guestEmail}
                     onChange={(e) => setGuestEmail(e.target.value)}
-                    className="w-full bg-brand-dark/50 border border-brand-teal/50 rounded-lg pl-10 pr-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all placeholder-gray-500"
-                    placeholder="john@example.com"
+                    className="w-full bg-brand-dark/50 border border-brand-teal/50 rounded-lg pr-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all pl-10 placeholder-gray-500"
+                    placeholder="carlos@ejemplo.com"
                     required
                   />
                 </div>
@@ -112,7 +111,7 @@ const ReservationModal = ({ isOpen, onClose, room, dates }) => {
                 disabled={isLoading}
                 className="w-full py-3 mt-4 rounded-lg bg-brand-accent text-brand-dark font-bold hover:bg-brand-gold transition-colors flex justify-center items-center gap-2 shadow-[0_0_10px_rgba(245,158,11,0.3)] hover:shadow-[0_0_20px_rgba(245,158,11,0.5)] disabled:opacity-70"
               >
-                {isLoading ? 'Processing...' : 'Confirm Reservation'}
+                {isLoading ? 'Procesando...' : 'Confirmar Reservación'}
               </button>
             </form>
           </div>

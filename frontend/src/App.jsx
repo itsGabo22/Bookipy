@@ -26,10 +26,10 @@ function App() {
             </Link>
             <div className="flex gap-4">
               <Link to="/" className="text-gray-300 hover:text-white transition-colors">
-                Book a Room
+                Reservar Habitación
               </Link>
               <Link to="/dashboard" className="text-gray-300 hover:text-white transition-colors">
-                My Dashboard
+                Mi Panel
               </Link>
             </div>
           </div>
@@ -47,7 +47,7 @@ function App() {
       {/* Footer */}
       <footer className="bg-brand-navy border-t border-brand-teal/30 mt-auto">
         <div className="max-w-7xl mx-auto px-4 py-6 text-center text-gray-400 text-sm">
-          &copy; {new Date().getFullYear()} Bookipy Hotel Reservation System. All rights reserved.
+          &copy; {new Date().getFullYear()} Sistema de Gestión Hotelera Bookipy. Todos los derechos reservados.
         </div>
       </footer>
     </div>
